@@ -94,6 +94,7 @@ class ResNetTrainer(BaseTrainer):
         param_dict = parse_model_config(model_cfg)
         
         model = ResNet(**param_dict)
+        self.count_params(model)
         return model
 
     # ── 3. Loss ───────────────────────────────────────────────────────────

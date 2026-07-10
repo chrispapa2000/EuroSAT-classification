@@ -34,4 +34,5 @@ class ConvNetTrainer(ResNetTrainer):
         param_dict = parse_model_config(model_cfg)
         
         model = ConvNet(**param_dict)
+        self.count_params(model)
         return model
