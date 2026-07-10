@@ -1,8 +1,9 @@
 *.ipynb
-data/
 .vscode
 experiments/
-visualizations
+visualizations/
+EuroSAT_MS/
+EuroSAT_MS.zip
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
