@@ -1,0 +1,156 @@
+# =============================================================================
+# ML Training Configuration — PyTorch ResNet
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# Experiment
+# ---------------------------------------------------------------------------
+experiment:
+  basedir: './experiments/'
+  name: "exp1-swin"
+  project: "EuroSAT-classification"
+  seed: 42
+
+# ---------------------------------------------------------------------------
+# Data
+# ---------------------------------------------------------------------------
+data:
+  root_dir: "./data/"
+  dataset: "EuroSAT"             
+  num_classes: 10
+
+  loader:
+    batch_size: 64
+    num_workers: 4
+    pin_memory: true
+    drop_last: true                      # drop incomplete last batch during training
+
+  augmentation:
+    train:
+      pad_and_crop:
+        pad: 4                           # pad with four pixels
+        crop: 64                         # crop back to original size
+        p: 0.4                           # transform probability
+      random_horizontal_flip: true
+      random_vertical_flip: true
+    val:
+      
+    normalize:
+    #   mean: [0.4914, 0.4822, 0.4465]     
+    #   std:  [0.2470, 0.2435, 0.2616]
+
+# ---------------------------------------------------------------------------
+# Model
+# ---------------------------------------------------------------------------
+model:
+  architecture: "Swin"
+  num_classes: 10
+  dim: 48
+  heads: 3
+  stage_layers: [2,2,6,2]
+  patch_size: 2
+  window_size: 4
+  act: nn.GELU
+  input:
+    h: 64
+    w: 64
+    c: 13
+
+# ---------------------------------------------------------------------------
+# Training
+# ---------------------------------------------------------------------------
+training:
+  epochs: 90
+  precision: "fp32"                      # fp32 | fp16 | bf16
+  grad_clip_norm:                        # null to disable
+  accumulate_grad_batches: 1             # effective_batch = batch_size * accumulate
+  label_smoothing: 0.1                   # 0.0 to disable
+
+  # # Early stopping
+  # early_stopping:
+  #   enabled: true
+  #   patience: 10
+
+# ---------------------------------------------------------------------------
+# Optimizer
+# ---------------------------------------------------------------------------
+optimizer:
+  name: "adamw"                          # sgd | adam | adamw | lars
+  lr: 1.0e-3
+  weight_decay: 0.05
+  betas: [0.9, 0.999]                    # Adam / AdamW only
+  eps: 1.0e-8
+
+# ---------------------------------------------------------------------------
+# Scheduler
+# ---------------------------------------------------------------------------
+scheduler:
+  name: "step"                         # step | multistep | cosine | onecycle | plateau
+  warmup_epochs: 2
+  warmup_strategy: "linear"             # linear | cosine
+
+  # Step decay (if name: step)
+  step:
+    step_size: 10
+    gamma: 0.1
+  
+  # # Cosine annealing
+  # cosine:
+  #   t_max: 90                            # usually = total epochs
+  #   eta_min: 1.0e-6
+
+  # # MultiStep decay (if name: multistep)
+  # multistep:
+  #   milestones: [30, 60, 80]
+  #   gamma: 0.1
+
+  # # ReduceLROnPlateau (if name: plateau)
+  # plateau:
+  #   monitor: "val/loss"
+  #   factor: 0.1
+  #   patience: 5
+  #   min_lr: 1.0e-7
+
+# ---------------------------------------------------------------------------
+# Loss
+# ---------------------------------------------------------------------------
+loss:
+  name: "cross_entropy"
+
+# ---------------------------------------------------------------------------
+# Evaluation
+# ---------------------------------------------------------------------------
+evaluation:
+  metrics:
+    - "acc" # follow acc@k pattern. For top-1 accuracy simply using "acc" works as well
+    - "acc@3"
+  eval_every_n_epochs: 1
+  test_after_training: true
+
+# ---------------------------------------------------------------------------
+# Hardware & Distribution
+# ---------------------------------------------------------------------------
+hardware:
+  device: "cuda"                         # cuda | cpu | mps
+  gpu_ids: [0]                           # multi-GPU: [0, 1, 2, 3]
+
+# ---------------------------------------------------------------------------
+# Checkpointing
+# ---------------------------------------------------------------------------
+checkpointing:
+  dir: "./checkpoint_dir/"
+  monitor: "val/loss"                    # val/loss, val/acc 
+  mode: "min"                            # max, min -> choose depending on monitor
+  save_last: true
+  resume_from: /home/chris/ece/projects/EuroSAT-classification/experiments/EuroSAT-classification/exp1-swin/checkpoint_dir/last.pth                         # path/to/checkpoint.pth
+
+# ---------------------------------------------------------------------------
+# Logging
+# ---------------------------------------------------------------------------
+logging:
+  backend: "tensorboard"
+  log_every_n_steps: 50
+  save_dir: "./logs/"
+
+  tensorboard:
+    flush_secs: 30
