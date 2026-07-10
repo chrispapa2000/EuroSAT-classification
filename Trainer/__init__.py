@@ -769,9 +769,11 @@ def get_class_from_string(dotted_path: str):
     return getattr(module, class_name)
 
 def parse_model_config(model_cfg):
-    del model_cfg['architecture']
+    # del model_cfg['architecture']
     param_dict = dict()
     for k,v in model_cfg.items():
+        if k == 'architecture':
+            continue
         if k == 'input':
             for subkey, subval in v.items():
                 param_dict[subkey] = subval 
@@ -779,5 +781,4 @@ def parse_model_config(model_cfg):
             param_dict[k] = get_class_from_string(v)
         else:
             param_dict[k] = v
-    
     return param_dict
