@@ -8,7 +8,7 @@
 experiment:
   basedir: './experiments/'
   # name: "exp1-vit"
-  name: "testexp-vit"
+  name: "exp-vit"
   project: "EuroSAT-classification"
   seed: 42
 

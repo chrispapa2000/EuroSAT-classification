@@ -142,7 +142,7 @@ checkpointing:
   monitor: "val/loss"                    # val/loss, val/acc 
   mode: "min"                            # max, min -> choose depending on monitor
   save_last: true
-  resume_from: /home/chris/ece/projects/EuroSAT-classification/experiments/EuroSAT-classification/exp1-swin/checkpoint_dir/last.pth                         # path/to/checkpoint.pth
+  resume_from:                           # path/to/checkpoint.pth
 
 # ---------------------------------------------------------------------------
 # Logging
