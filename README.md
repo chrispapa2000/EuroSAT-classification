@@ -115,10 +115,10 @@ This means all models produce a flat feature vector of the same shape, making th
 
 | Model | Params | Epoch-Time | Acc@1 | Acc@3 |
 |---|---|---|---|---|
-|ConvNet|26M|---|0.6135|0.8852|
-|ResNet|26M|---|0.9778 |0.9987|
-|ViT|5.4M|---|0.9767|0.9983|
-|Swin|6.9M|---|0.9774|0.9976|
+|ConvNet|26M|12s|0.6135|0.8852|
+|ResNet|26M|12s|0.9778 |0.9987|
+|ViT|5.4M|70s|0.9767|0.9983|
+|Swin|6.9M|33s|0.9774|0.9976|
 
 ### PCA Embedding visualization
 
