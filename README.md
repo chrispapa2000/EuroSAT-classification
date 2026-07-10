@@ -107,11 +107,36 @@ python 2d_vis.py --config experiments/EuroSAT-classification/exp1-swin/config.ym
 - **ViT** — CLS token embedding, extracted right before the projection head
 - **Swin / ResNet / ConvNet** — final feature map, spatially averaged via global average pooling
 
-This means all models produce a flat feature vector of the same shape, making the visualisations directly comparable across architectures.
-
----
+This means all models produce a flat feature vector of the same shape, making the visualisations comparable across architectures.
 
 ## Results
+
+### Results on Test Set
+
+| Model | Params | Epoch-Time | Acc@1 | Acc@3 |
+|---|---|---|---|---|
+|ConvNet|26M|---|0.6135|0.8852|
+|ResNet|26M|---|0.9778 |0.9987|
+|ViT|5.4M|---|0.9767|0.9983|
+|Swin|6.9M|---|0.9774|0.9976|
+
+### PCA Embedding visualization
+
+|  Model |                        Visualization                        |
+|:------:|:-----------------------------------------------------------:|
+| ResNet |  <img src="assets/ResNet_PCA.png" alt="pca" width="500"/>\| |
+|   ViT  |   <img src="assets/ViT_PCA.png" alt="pca" width="500"/>\|   |
+|  Swin  |   <img src="assets/Swin_PCA.png" alt="pca" width="500"/>\|  |
+
+### t-SNE Embedding visualization
+
+|  Model |                        Visualization                        |
+|:------:|:-----------------------------------------------------------:|
+| ResNet | <img src="assets/ResNet_TSNE.png" alt="pca" width="500"/>\| |
+|   ViT  |   <img src="assets/ViT_TSNE.png" alt="pca" width="500"/>\|  |
+|  Swin  |   <img src="assets/Swin_TSNE.png" alt="pca" width="500"/>   |
+
+
 
 
 All experiments where run on an NVIDIA RTX 3060 laptop GPU with 6GB for vRAM.
