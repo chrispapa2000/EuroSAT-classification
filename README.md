@@ -47,7 +47,7 @@ Benchmarking deep learning architectures for land use and land cover (LULC) clas
 ## Setup
 
 ```bash
-git clone https://github.com/chrispapa2000/vit-classification.git
+git clone https://github.com/chrispapa2000/eurosat-classification.git
 cd eurosat-classification/
 ```
 Install PyTorch:
