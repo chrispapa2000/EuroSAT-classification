@@ -41,7 +41,7 @@ Benchmarking deep learning architectures for land use and land cover (LULC) clas
 │   ...
 ├── 2d_vis.py          # script for 2d visualization of model representations using PCA or TSNE
 ├── train.py           # entry point: python train.py --config configs/config.yml
-└── test.py            # repot test set metrics for a trained mode: python test.py --config configs/config.yml 
+└── test.py            # report test set metrics for a trained model: python test.py --config configs/config.yml 
 ```
 
 ## Setup
